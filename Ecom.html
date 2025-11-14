@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ShopEase — Demo E‑commerce (HTML/CSS/JS)</title>
+  <meta name="description" content="A simple, smooth, and professional demo e-commerce site built with HTML, CSS and JavaScript. Perfect to show clients or use as a starter." />
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa6b2; --accent:#1a73e8; --accent2:#6a11cb;
+      --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Segoe UI,system-ui,Arial;background:linear-gradient(180deg,#071028 0%,var(--bg) 60%);color:#e6eef8;-webkit-font-smoothing:antialiased}
+    a{color:inherit}
+
+    /* Header */
+    header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 26px;background:linear-gradient(90deg,var(--card),rgba(11,18,32,0.85));backdrop-filter: blur(6px);position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(255,255,255,0.02)}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:18px;box-shadow:0 6px 20px rgba(26,115,232,0.12)}
+    .brand h1{font-size:18px;margin:0}
+    .search{flex:1;max-width:640px;margin:0 20px;display:flex;align-items:center;background:var(--glass);padding:8px 10px;border-radius:10px}
+    .search input{flex:1;background:transparent;border:0;outline:none;color:#dfe9f8;padding:8px;font-size:14px}
+    .actions{display:flex;align-items:center;gap:10px}
+    .btn{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;padding:9px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+    .icon-btn{background:transparent;border:0;color:var(--muted);padding:8px;border-radius:8px;cursor:pointer}
+
+    /* Layout */
+    .wrap{max-width:1150px;margin:22px auto;padding:0 18px}
+    .hero{display:flex;gap:20px;align-items:center;margin-bottom:18px}
+    .hero-left{flex:1}
+    .hero-title{font-size:28px;margin:0 0 8px 0}
+    .hero-desc{color:var(--muted);margin:0}
+    .hero-right{width:320px}
+
+    /* product grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:12px;box-shadow:0 6px 30px rgba(2,6,23,0.6);transition:transform .25s ease,box-shadow .25s ease}
+    .card:hover{transform:translateY(-6px);box-shadow:0 14px 45px rgba(2,6,23,0.8)}
+    .thumb{height:160px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:flex-end;justify-content:flex-start;padding:12px;color:#fff;font-weight:800;font-size:20px}
+    .p-title{font-weight:700;margin:10px 0 4px}
+    .p-desc{color:var(--muted);font-size:13px;margin:0 0 12px}
+    .price-row{display:flex;align-items:center;justify-content:space-between}
+    .price{font-weight:800}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* cart sidebar */
+    .cart-panel{position:fixed;right:20px;top:80px;width:360px;max-height:70vh;background:rgba(8,12,20,0.95);border-radius:12px;padding:14px;box-shadow:0 20px 60px rgba(2,6,23,0.7);overflow:auto;transform:translateX(420px);transition:transform .35s cubic-bezier(.2,.9,.2,1);z-index:80}
+    .cart-panel.open{transform:none}
+    .cart-item{display:flex;gap:12px;align-items:center;padding:8px;border-radius:8px}
+    .cart-thumb{width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800}
+    .qty{display:flex;gap:6px;align-items:center}
+    .qty button{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:4px 8px;border-radius:6px;cursor:pointer}
+
+    /* modal product quickview */
+    .overlay{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;z-index:90}
+    .overlay.show{display:flex}
+    .modal{width:900px;max-width:95%;background:linear-gradient(180deg,#071428,#081228);padding:18px;border-radius:12px}
+    .modal-grid{display:grid;grid-template-columns:360px 1fr;gap:18px}
+
+    /* footer */
+    footer{margin:26px 0 80px 0;color:var(--muted);text-align:center}
+
+    /* small screens */
+    @media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}.hero-right{display:none}.cart-panel{width:320px}}
+    @media (max-width:640px){.grid{grid-template-columns:1fr}.search{display:none}.brand h1{display:none}.wrap{padding:0 12px}.cart-panel{right:10px;top:70px}}
+
+    /* subtle animations */
+    .fade-up{opacity:0;transform:translateY(10px);transition:all .45s cubic-bezier(.2,.9,.25,1)}
+    .fade-up.show{opacity:1;transform:none}
+
+    /* empty state */
+    .empty{padding:20px;border-radius:10px;text-align:center;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">SE</div>
+      <div>
+        <h1>ShopEase</h1>
+        <div style="font-size:12px;color:var(--muted)">Demo e‑commerce — HTML/CSS/JS</div>
+      </div>
+    </div>
+
+    <div class="search">
+      <input id="searchInput" placeholder="Search products, e.g. headphone, mug..." />
+      <button class="icon-btn" id="clearSearch" title="Clear">✖</button>
+    </div>
+
+    <div class="actions">
+      <button class="icon-btn" id="favoritesBtn" title="Favorites">❤</button>
+      <button class="btn" id="cartBtn">Cart (<span id="cartCount">0</span>)</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero fade-up show">
+      <div class="hero-left">
+        <h2 class="hero-title">Beautiful products, delivered simply.</h2>
+        <p class="hero-desc">A clean, responsive demo storefront your client can use to preview products and place orders. Built with only HTML, CSS and vanilla JavaScript.</p>
+      </div>
+      <div class="hero-right card">
+        <div style="font-weight:700">Quick Cart Preview</div>
+        <div id="miniCart" style="margin-top:12px">No items yet</div>
+      </div>
+    </section>
+
+    <section>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin:14px 0">
+        <h3 style="margin:0">Featured Products</h3>
+        <div style="color:var(--muted);font-size:13px">Showing <span id="resultCount">0</span> items</div>
+      </div>
+
+      <div class="grid" id="productGrid">
+        <!-- products injected here -->
+      </div>
+    </section>
+  </main>
+
+  <!-- cart side panel -->
+  <aside class="cart-panel" id="cartPanel">
+    <h3 style="margin-top:0">Your Cart</h3>
+    <div id="cartItems"></div>
+    <div style="border-top:1px solid rgba(255,255,255,0.03);padding-top:12px;margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+      <div class="small muted">Total:</div>
+      <div style="font-weight:800" id="cartTotal">₹0</div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:10px">
+      <button class="btn" id="checkoutBtn">Checkout</button>
+      <button class="icon-btn" id="clearCartBtn">Clear</button>
+    </div>
+  </aside>
+
+  <!-- modal -->
+  <div class="overlay" id="overlay">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <strong id="modalTitle"></strong>
+        <button class="icon-btn" id="closeModal">✖</button>
+      </div>
+      <div class="modal-grid">
+        <div id="modalThumb" style="border-radius:10px;padding:18px;color:#fff;font-weight:800"></div>
+        <div>
+          <div id="modalDesc" class="small"></div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+            <div style="font-weight:800;font-size:20px" id="modalPrice"></div>
+            <div class="qty" style="margin-left:auto">
+              <button id="decQty">-</button>
+              <div id="modalQty" style="min-width:28px;text-align:center">1</div>
+              <button id="incQty">+</button>
+            </div>
+          </div>
+          <div style="margin-top:12px"><button class="btn" id="modalAdd">Add to Cart</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2025 ShopEase Demo • Built with HTML, CSS & JavaScript</footer>
+
+  <script>
+    // Sample product data
+    const PRODUCTS = [
+      {id:1,title:'Wireless Headphones',price:1499,desc:'Comfortable over-ear bluetooth headphones with long battery life and rich sound.'},
+      {id:2,title:'Ceramic Mug - Blue',price:399,desc:'Premium ceramic mug with scratch-resistant glaze. 350ml.'},
+      {id:3,title:'Minimalist Backpack',price:2499,desc:'Water-resistant backpack with laptop compartment and organizer pockets.'},
+      {id:4,title:'Desk Lamp LED',price:799,desc:'Adjustable LED lamp with touch controls and warm/cool modes.'},
+      {id:5,title:'Phone Stand',price:299,desc:'Aluminum phone stand for desks - foldable and sturdy.'},
+      {id:6,title:'Notebook - A5',price:199,desc:'Hardcover A5 notebook with dotted pages.'}
+    ];
+
+    // state
+    let cart = JSON.parse(localStorage.getItem('cart')||'{}');
+    let filtered = PRODUCTS.slice();
+
+    // DOM refs
+    const grid = document.getElementById('productGrid');
+    const resultCount = document.getElementById('resultCount');
+    const cartCount = document.getElementById('cartCount');
+    const cartPanel = document.getElementById('cartPanel');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const cartBtn = document.getElementById('cartBtn');
+    const cartMini = document.getElementById('miniCart');
+
+    // modal refs
+    const overlay = document.getElementById('overlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalThumb = document.getElementById('modalThumb');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalAdd = document.getElementById('modalAdd');
+    const modalQty = document.getElementById('modalQty');
+    let modalQtyVal = 1;
+    let currentModalProduct = null;
+
+    // init
+    function init(){
+      renderProducts(PRODUCTS);
+      updateCartUI();
+      document.getElementById('searchInput').addEventListener('input', onSearch);
+      document.getElementById('clearSearch').addEventListener('click', ()=>{document.getElementById('searchInput').value=''; onSearch();});
+      document.getElementById('cartBtn').addEventListener('click', ()=>cartPanel.classList.toggle('open'));
+      document.getElementById('favoritesBtn').addEventListener('click', ()=>alert('Favorites demo — not implemented'));
+      document.getElementById('checkoutBtn').addEventListener('click', checkout);
+      document.getElementById('clearCartBtn').addEventListener('click', ()=>{cart={}; saveCart(); updateCartUI();});
+      document.getElementById('closeModal').addEventListener('click', closeModal);
+      document.getElementById('decQty').addEventListener('click', ()=>{ if(modalQtyVal>1){modalQtyVal--; updateModalQty();}});
+      document.getElementById('incQty').addEventListener('click', ()=>{ modalQtyVal++; updateModalQty();});
+      modalAdd.addEventListener('click', ()=>{ addToCart(currentModalProduct.id, modalQtyVal); closeModal(); });
+    }
+
+    function renderProducts(list){
+      grid.innerHTML='';
+      list.forEach(p=>{
+        const el = document.createElement('div'); el.className='card fade-up';
+        el.innerHTML = `
+          <div class="thumb">${p.title.split(' ').slice(0,2).map(w=>w[0]).join('')}</div>
+          <div class="p-title">${p.title}</div>
+          <div class="p-desc">${p.desc}</div>
+          <div class="price-row">
+            <div>
+              <div class="price">₹${p.price}</div>
+              <div class="small">inclusive of taxes</div>
+            </div>
+            <div>
+              <button class="btn" data-id="${p.id}">Add</button>
+              <button class="icon-btn" data-quick="${p.id}" title="Quick view">🔍</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(el);
+      });
+      // animate entries
+      document.querySelectorAll('.fade-up').forEach((el,i)=>setTimeout(()=>el.classList.add('show'),80*i));
+      // attach events
+      grid.querySelectorAll('button[data-id]').forEach(btn=>btn.addEventListener('click',()=>addToCart(Number(btn.dataset.id),1)));
+      grid.querySelectorAll('button[data-quick]').forEach(btn=>btn.addEventListener('click',()=>openModal(Number(btn.dataset.quick))));
+      resultCount.textContent = list.length;
+    }
+
+    function onSearch(){
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      filtered = PRODUCTS.filter(p=>p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+      renderProducts(filtered);
+    }
+
+    function saveCart(){ localStorage.setItem('cart', JSON.stringify(cart)); }
+
+    function addToCart(id, qty=1){
+      if(!cart[id]) cart[id] = { ...PRODUCTS.find(p=>p.id===id), qty:0 };
+      cart[id].qty += qty;
+      saveCart(); updateCartUI(); showToast('Added to cart');
+    }
+
+    function updateCartUI(){
+      const items = Object.values(cart);
+      cartItems.innerHTML = items.length ? items.map(it=>`
+        <div class="cart-item">
+          <div class="cart-thumb">${it.title.split(' ').slice(0,2).map(w=>w[0]).join('')}</div>
+          <div style="flex:1">
+            <div style="font-weight:700">${it.title}</div>
+            <div class="small">₹${it.price} × ${it.qty}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:800">₹${it.price*it.qty}</div>
+            <div class="qty" style="margin-top:6px">
+              <button onclick="changeQty(${it.id}, -1)">-</button>
+              <span style="padding:0 8px">${it.qty}</span>
+              <button onclick="changeQty(${it.id}, +1)">+</button>
+            </div>
+          </div>
+        </div>
+      `).join('') : '<div class="empty">Your cart is empty</div>';
+
+      const total = items.reduce((s,i)=>s + i.price * i.qty, 0);
+      cartTotal.textContent = '₹' + total;
+      cartCount.textContent = items.reduce((s,i)=>s + i.qty, 0);
+      // mini cart
+      cartMini.innerHTML = items.length ? items.map(it=>`<div style="font-size:13px;margin-bottom:6px">${it.title} × ${it.qty}</div>`).join('') : 'No items yet';
+    }
+
+    function changeQty(id, delta){
+      if(!cart[id]) return; cart[id].qty += delta; if(cart[id].qty <=0) delete cart[id]; saveCart(); updateCartUI();
+    }
+    window.changeQty = changeQty; // expose for inline onclick in template
+
+    function openModal(id){
+      const p = PRODUCTS.find(x=>x.id===id); if(!p) return; currentModalProduct = p; modalQtyVal = 1; updateModalQty();
+      modalTitle.textContent = p.title; modalThumb.style.background = 'linear-gradient(135deg,var(--accent),var(--accent2))'; modalThumb.textContent = p.title.split(' ').slice(0,2).map(w=>w[0]).join('');
+      modalDesc.textContent = p.desc; modalPrice.textContent = '₹' + p.price; overlay.classList.add('show');
+    }
+    function closeModal(){ overlay.classList.remove('show'); }
+    function updateModalQty(){ modalQty.textContent = modalQtyVal; }
+
+    function checkout(){
+      if(Object.keys(cart).length===0){ alert('Your cart is empty'); return; }
+      // simple demo checkout flow
+      alert('Thank you for your order! (Demo checkout)'); cart = {}; saveCart(); updateCartUI(); cartPanel.classList.remove('open');
+    }
+
+    // small toast
+    function showToast(msg){
+      const t = document.createElement('div'); t.textContent = msg; t.style.position='fixed'; t.style.right='20px'; t.style.bottom='20px'; t.style.background='linear-gradient(90deg,var(--accent),var(--accent2))'; t.style.padding='10px 14px'; t.style.borderRadius='10px'; t.style.boxShadow='0 10px 30px rgba(2,6,23,0.6)'; t.style.zIndex=120; document.body.appendChild(t);
+      setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateY(12px)'; },1200); setTimeout(()=>t.remove(),1800);
+    }
+
+    // init app
+    init();
+  </script>
+</body>
+</html>
