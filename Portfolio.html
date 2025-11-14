@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pintu Mahato Portfolio</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI', sans-serif; background:#0d0f18; color:#fff; }
+
+    header {
+      background:linear-gradient(135deg,#1a73e8,#6a11cb);
+      padding:40px 20px;
+      text-align:center;
+      box-shadow:0 5px 20px rgba(0,0,0,0.4);
+    }
+    header h1 { font-size:50px; font-weight:700; color:#ffffff; text-shadow:0 0 8px rgba(255,255,255,0.7); }
+    /* Header animation */
+    .header-anim {
+      animation: slideFade 1.4s ease-out forwards;
+      opacity:0;
+      color:#ffffff !important;
+      background:none !important;
+      -webkit-background-clip:unset !important;
+    }
+    @keyframes slideFade {
+      0% { opacity:0; transform:translateY(-20px) scale(0.95); }
+      60% { opacity:1; transform:translateY(5px) scale(1.05); }
+      100% { opacity:1; transform:translateY(0) scale(1); }
+    }
+
+    @keyframes glowText {
+      0% { filter: drop-shadow(0 0 2px #1a73e8); }
+      100% { filter: drop-shadow(0 0 10px #6a11cb); }
+    }
+      60% { opacity:1; transform:translateY(5px) scale(1.03); }
+      100% { opacity:1; transform:translateY(0) scale(1); }
+    }
+    header p { font-size:20px; margin-top:10px; opacity:0.9; }
+
+    nav {
+      background:#111526; padding:15px; text-align:center; position:sticky; top:0; z-index:10;
+      box-shadow:0 5px 15px rgba(0,0,0,0.4);
+    }
+    nav a {
+      color:#1a73e8; text-decoration:none; margin:0 20px; font-size:18px; font-weight:600; transition:.3s;
+    }
+    nav a:hover { color:#6a11cb; }
+
+    .section { padding:40px 20px; max-width:1100px; margin:auto; }
+    .card {
+      background:#171b2b; padding:22px; border-radius:15px;
+      box-shadow:0 4px 25px rgba(0,0,0,0.4);
+      margin-bottom:15px;
+      transition:0.3s;
+    }
+    .card:hover { transform:scale(1.02); box-shadow:0 4px 35px rgba(0,0,0,0.6); }
+
+    .skills span {
+      display:inline-block; background:linear-gradient(135deg,#1a73e8,#6a11cb);
+      padding:10px 18px; border-radius:30px; margin:6px; font-size:15px; font-weight:bold;
+      color:#fff; box-shadow:0 3px 10px rgba(0,0,0,0.4); transition:0.3s;
+    }
+    .skills span:hover { transform:scale(1.12); }
+    /* Added hover effects */
+    .card ul li:hover { color:#1a73e8; transform:translateX(5px); transition:0.3s; }
+    .card h2:hover { color:#6a11cb; transition:0.3s; }
+
+    ul { margin-top:10px; line-height:1.7; }
+    footer { background:#10131f; padding:20px; text-align:center; color:#6a11cb; margin-top:50px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1 class="header-anim">Pintu Kumar Mahato</h1>
+  <p>Web Developer | Product Analyst Trainee | BCA Graduate</p>
+</header>
+
+<nav>
+  <a href="#about">About</a>
+  <a href="#education">Education</a>
+  <a href="#experience">Experience</a>
+  <a href="#skills">Skills</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<div class="section" id="about">
+  <div class="card">
+    <h2>About Me</h2>
+    <p>I am Pintu Kumar Mahato, a dedicated BCA graduate skilled in Web Development, Product Analysis, and modern UI design. I have hands‑on experience as a Trainee at PBSSD Bangla and as a Web Development Intern at Flexon, where I worked with HTML, CSS, JavaScript, React.js, and Bootstrap. I build fast, responsive, animated websites and enjoy solving real‑world technical problems.</p>
+  </div>
+</div>
+
+<div class="section" id="education">
+  <div class="card">
+    <h2>Education</h2>
+    <ul>
+      <li><strong>Bachelor of Computer Applications</strong> — Michael Madhusudan Memorial College (2021–2024) — 76.5%</li>
+      <li><strong>Higher Secondary (PCM)</strong> — Manisha International School (2019–2021) — 62%</li>
+      <li><strong>Secondary Education</strong> — Manisha International School (2018–2019) — 60%</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section" id="experience">
+  <div class="card">
+    <h2>Experience</h2>
+    <h3>PBSSD Bangla — Trainee (Aug 2024 – Mar 2025)</h3>
+    <ul>
+      <li>Completed industry-focused training in product analysis and workflow management.</li>
+      <li>Collaborated with teams for data-driven decision-making and documentation.</li>
+    </ul>
+
+    <h3>Flexon — Web Development Intern (Jan 2025 – Feb 2025)</h3>
+    <ul>
+      <li>Developed responsive websites using HTML, CSS, JavaScript, React.js & Bootstrap.</li>
+      <li>Improved website performance and contributed to technical documentation.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section" id="skills">
+  <div class="card">
+    <h2>Technical Skills</h2>
+    <div class="skills">
+      <span>HTML</span><span>CSS</span><span>JavaScript</span><span>React.js</span><span>Bootstrap</span>
+      <span>Python</span><span>Java</span><span>C/C++</span><span>SQL</span><span>MongoDB</span>
+      <span>Git</span><span>VS Code</span>
+    </div>
+
+    <h2 style="margin-top:25px;">Certifications</h2>
+    <ul>
+      <li>MS Excel — MindLuster</li>
+      <li>English Communication — MindLuster</li>
+    </ul>
+
+    <h2 style="margin-top:25px;">Achievements</h2>
+    <ul>
+      <li>Javelin Throw — 2× First Place (College)</li>
+      <li>Chess — 1st Place (Class 12)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section" id="projects">
+  <div class="card">
+    <h2>Projects</h2>
+    <ul>
+      <li><strong>Text-to-Speech App</strong> — Python, Tkinter, GTTS</li>
+      <li><strong>Ebook Website</strong> — HTML, CSS, JS, PHP, MySQL</li>
+      <li><strong>Portfolio Website</strong> — Fully animated, responsive website</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section" id="contact">
+  <div class="card">
+    <h2>Contact</h2>
+    <p>Email: <strong>232pintumahato@gmail.com</strong></p>
+    <p>Phone: <strong>7908689963</strong></p>
+    <p>LinkedIn: <strong>linkedin.com/in/pintu-kumar-mahato-493647277</strong></p>
+    <p>GitHub: <strong>github.com/pintu-39</strong></p>
+  </div>
+</div>
+
+<footer>
+  © 2025 Pintu Mahato — Portfolio Website
+</footer>
+
+</body>
+</html>
